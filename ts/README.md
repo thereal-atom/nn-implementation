@@ -1,0 +1,1 @@
+I am not the most comprehensive rust developer yet so I coded the network in typescript (my primary language) first in order to get my head around the software implementation.

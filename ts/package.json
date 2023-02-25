@@ -1,0 +1,6 @@
+{
+    "scripts": {
+        "dev": "npx ts-node test.ts",
+        "math": "npx ts-node utils/test.ts"
+    }
+}
