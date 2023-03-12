@@ -79,16 +79,6 @@ export class Layer {
 
         return outputs;
     };
-
-    calculateCost(expected: number[]): number {
-        let sum = 0;
-
-        this.neurones.forEach((neurone, i) => {
-            sum += Math.pow(neurone.activation - expected[i], 2)
-        });
-
-        return sum;
-    };
 };
 
 class NeuralNetwork {
@@ -121,6 +111,16 @@ class NeuralNetwork {
         });
 
         return this.layers[this.layers.length -  1].neurones.map(neurone => neurone.activation);
+    };
+
+    calculateCost(expected: number[]): number {
+        let sum = 0;
+
+        this.layers[this.layers.length - 1].neurones.forEach((neurone, i) => {
+            sum += Math.pow(neurone.activation - expected[i], 2)
+        });
+
+        return sum;
     };
 };
 
