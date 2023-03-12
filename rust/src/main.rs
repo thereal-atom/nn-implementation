@@ -39,29 +39,53 @@ impl Layer {
 
         self.activations = activations;
     }
-    
-    // fn calculate_cost(input_activations: Vec<f32>, expected_output: Vec<f32>) -> f32 {
-    //     let mut cost: f32 = 0.0;
-    
-    //     for i in 0..input_activations.len() {
-    //         cost += (input_activations[i] - expected_output[i]).powf(2.0);
-    //     }
-    
-    //     cost
-    // }
+}
+
+struct NeuralNetwork {
+    layers: Vec<Layer>
+}
+
+impl NeuralNetwork {
+    fn new(layer_sizes: Vec<usize>) -> NeuralNetwork {
+        let mut layers: Vec<Layer> = vec![];
+
+        for i in 1..layer_sizes.len() {
+            layers.push(Layer::new(layer_sizes[i], layer_sizes[i - 1]))
+        }
+
+        NeuralNetwork {
+            layers
+        }
+    }
+
+    fn calculate_cost(&self, input_activations: Vec<f32>, expected_outputs: Vec<f32>) -> f32 {
+        let mut total_cost = 0.0;
+
+        for i in 0..self.layers.len() {
+            for j in 0..self.layers[i].activations.len() {
+                total_cost += (if i == 0 { input_activations[j] } else { self.layers[i - 1].activations[j] } - expected_outputs[i]).powf(2.0);
+            }
+        }
+
+        total_cost / expected_outputs.len() as f32
+    }
 }
 
 fn main() {
-    let mut layer = Layer::new(3, 2);
+    // let mut layer = Layer::new(3, 2);
 
-    let input_activations = generate_random_vector(0.0, 10.0, 3);
+    // let input_activations = generate_random_vector(0.0, 10.0, 3);
 
-    println!("layer was inputted with these activations\n {:?}", input_activations);
-    println!("layer was initialized with these weights\n {:?}", layer.weights);
-    println!("layer was initialized with these biases\n {:?}", layer.biases);
-    println!("layer was initialized with these activations\n {:?}", layer.activations);
+    // println!("layer was inputted with these activations\n {:?}", input_activations);
+    // println!("layer was initialized with these weights\n {:?}", layer.weights);
+    // println!("layer was initialized with these biases\n {:?}", layer.biases);
+    // println!("layer was initialized with these activations\n {:?}", layer.activations);
 
-    layer.calculate_activations(input_activations);
+    // layer.calculate_activations(input_activations);
 
-    println!("layer outputs these activations\n {:?}", layer.activations);
+    // println!("layer outputs these activations\n {:?}", layer.activations);
+
+    let nn = NeuralNetwork::new(Vec::from([2, 3, 2]));
+
+    println!("{:?}", nn.calculate_cost(vec![0.1, 0.2, 0.3], vec![1.0, 0.0, 0.0]));
 }
