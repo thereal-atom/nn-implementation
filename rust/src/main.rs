@@ -69,6 +69,17 @@ impl NeuralNetwork {
 
         total_cost / expected_outputs.len() as f32
     }
+
+    // // cost of the network across all data points
+    // fn calculate_overall_cost(&self, input_data: &Vec<&Vec<f32>>, expected_outputs: &Vec<f32>) -> f32 {
+    //     let mut total_cost = 0.0;
+
+    //     for i in 0..input_data.len() {
+    //         total_cost += self.calculate_cost(input_data[i].to_vec(), expected_outputs.to_vec());
+    //     };
+
+    //     total_cost / input_data.len() as f32
+    // }
 }
 
 fn main() {
@@ -87,5 +98,12 @@ fn main() {
 
     let nn = NeuralNetwork::new(Vec::from([2, 3, 2]));
 
-    println!("{:?}", nn.calculate_cost(vec![0.1, 0.2, 0.3], vec![1.0, 0.0, 0.0]));
+    // println!("{:?}", nn.calculate_overall_cost(
+    //     &vec![
+    //         &vec![0.1, 0.2, 0.3],
+    //         &vec![0.2, 0.4, 0.6],
+    //         &vec![0.3, 0.2, 0.1]
+    //     ],
+    //     &vec![1.0, 0.0, 0.0]
+    // )
 }
